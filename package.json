@@ -1,0 +1,18 @@
+{
+  "name": "day_3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "json-server --watch db.json"
+  },
+  "author": "nhut",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3",
+    "json-server": "^1.0.0-alpha.23",
+    "uuid": "^9.0.1"
+  }
+}
