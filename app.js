@@ -16,7 +16,7 @@ app.post("/users", (req, res) => {
   const newUser = { id: `US${uuidv4().split("-")[0]}`, userName };
   db.users.push(newUser);
 
-  res.json(newUser);
+  res.status(200).json(newUser);
 });
 
 // câu2: Viết API cho phép user tạo bài post (thêm bài post, xử lý id tương tự user).
@@ -31,7 +31,7 @@ app.post("/posts", (req, res) => {
   const newPost = { id, userId, content };
   db.posts.push(newPost);
 
-  res.json(newPost);
+  res.status(200).json(newPost);
 });
 
 // câu 3 :Viết API cho phép user chỉnh sửa lại bài post (chỉ user tạo bài viết mới được phép chỉnh sửa).
@@ -52,7 +52,7 @@ app.put("/posts/:postId", (req, res) => {
 
   post.content = content;
 
-  res.json({ message: "Update bài post thành công" });
+  res.status(200).json({ message: "Update bài post thành công" });
 });
 
 // câu 4: Viết API cho phép user được comment vào bài post
@@ -69,7 +69,7 @@ app.post("/posts/:postId/comments", (req, res) => {
   const newComment = { id, postId, userId, content };
   db.comments.push(newComment);
 
-  res.json(newComment);
+  res.status(200).json(newComment);
 });
 
 // câu 5: Viết API cho phép user chỉnh sửa comment (chỉ user tạo comment mới được sửa)
@@ -96,7 +96,7 @@ app.get("/posts/:postId/comments", (req, res) => {
   const { postId } = req.params;
   const comments = db.comments.filter((comment) => comment.postId === postId);
 
-  res.json(comments);
+  res.status(200).json(comments);
 });
 
 //câu 7: Viết API lấy tất cả các bài post, 3 comment đầu (dựa theo index) của tất cả user .
@@ -117,21 +117,21 @@ app.get("/posts", (req, res) => {
     };
   });
 
-  res.json(postsWithComments);
+  res.status(200).json(postsWithComments);
 });
 
 //câu 8: Viết API lấy một bài post và tất cả comment của bài post đó thông qua postId
 app.get("/api/posts/:postId", (req, res) => {
   const { postId } = req.params;
-  const post = router.db.get("posts").find({ id: postId }).value();
+  const post = db.get("posts").find({ id: postId }).value();
 
   if (!post) {
     return res.status(404).json({ error: "Post not found" });
   }
 
-  const comments = router.db.get("comments").filter({ postId }).value();
+  const comments = db.get("comments").filter({ postId }).value();
 
-  res.json({ post, comments });
+  res.status(200).json({ post, comments });
 });
 
 const PORT = 3000;
